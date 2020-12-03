@@ -18,3 +18,7 @@
 .fonts {
   font-size: larger;
 }
+
+#container {
+  height: 500px
+}
