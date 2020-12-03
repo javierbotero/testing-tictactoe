@@ -1,9 +1,10 @@
-const message = document.getElementById('message');
-const optionsMark = document.getElementsByClassName('mark-options');
+const message = () => document.getElementById('message');
+const optionsMark = () => document.getElementsByClassName('mark-options');
 const getName = () => document.getElementById('player-name').value;
-const div = document.getElementById('score');
-const reset = document.getElementById('reset');
-const container = document.getElementById('container');
+const div = () => document.getElementById('score');
+const reset = () => document.getElementById('reset');
+const container = () => document.getElementById('container');
+const { body } = document;
 
 const gameMatch = (() => {
   const players = [];
@@ -20,13 +21,13 @@ const gameMatch = (() => {
 
   const playGame = () => {
     // eslint-disable-next-line no-use-before-define
-    gameBoard.message.innerHTML = `${gameMatch.shift.namePlayer} make a move`;
+    gameBoard.message().innerHTML = `${gameMatch.shift.namePlayer} make a move`;
   };
 
   const displayScore = () => {
-    div.innerHTML = '<p class="col-12 text-center bg-info text-white m-0">SCORE<p>';
+    div().innerHTML = '<p class="col-12 text-center bg-info text-white m-0">SCORE<p>';
     for (let i = 0; i < players.length; i += 1) {
-      div.innerHTML += `<div class="col-6 p-2 bg-info text-white text-center">
+      div().innerHTML += `<div class="col-6 p-2 bg-info text-white text-center">
                          <p>${players[i].namePlayer}</p>
                          <p>${players[i].score}</p>
                        </div>`;
@@ -58,7 +59,7 @@ const gameMatch = (() => {
 const gameBoard = (() => {
   let board = ['', '', '', '', '', '', '', '', ''];
   const tile = ['X', 'O'];
-  const message = document.getElementById('message');
+  const message = () => document.getElementById('message');
 
   const changeDivsColors = () => {
     let indexes = [];
@@ -99,7 +100,7 @@ const gameBoard = (() => {
     displayBoard();
     // eslint-disable-next-line no-use-before-define
     const button = document.getElementById('button-reset');
-    reset.removeChild(button);
+    reset().removeChild(button);
     gameMatch.makeAvailableMarks();
     gameMatch.playing = true;
     gameMatch.playGame();
@@ -112,13 +113,13 @@ const gameBoard = (() => {
     button.className = 'bg-info text-white p-4 border-0 rounded my-2';
     button.addEventListener('click', () => { resetBoard(); });
     button.innerHTML = 'Reset';
-    reset.appendChild(button);
+    reset().appendChild(button);
   };
 
   const displayBoard = () => {
-    container.innerHTML = '';
+    container().innerHTML = '';
     for (let i = 0; i < 9; i += 1) {
-      container.innerHTML += `<div data-number="${i}" id="${i}" class="spot border border-warning d-flex justify-content-center align-items-center text-white font-weight-bold">${board[i]}</div>`;
+      container().innerHTML += `<div data-number="${i}" id="${i}" class="spot border border-warning d-flex justify-content-center align-items-center text-white font-weight-bold">${board[i]}</div>`;
     }
   };
 
@@ -133,14 +134,14 @@ const gameBoard = (() => {
       || (board[0] === board[4] && board[4] === board[8] && board[0] !== '')
       || (board[2] === board[4] && board[4] === board[6] && board[2] !== '')
     ) {
-      message.innerHTML = `${player.namePlayer} won!!`;
+      message().innerHTML = `${player.namePlayer} won!!`;
       player.score += 1;
       gameMatch.playing = false;
       gameMatch.displayScore();
       changeDivsColors();
       displayReset();
     } else if (!board.includes('')) {
-      message.innerHTML = 'We need another round to find a winner!!';
+      message().innerHTML = 'We need another round to find a winner!!';
       displayReset();
     } else {
       // eslint-disable-next-line max-len
@@ -155,7 +156,7 @@ const gameBoard = (() => {
     }
 
     if (tag.innerHTML !== '') {
-      message.innerHTML = 'Choose another space';
+      message().innerHTML = 'Choose another space';
     } else {
       board[tag.dataset.number] = gameMatch.shift.markPlayer;
       tag.innerHTML = board[tag.dataset.number];
@@ -195,4 +196,5 @@ export {
   message,
   optionsMark,
   getName,
+  body,
 };
