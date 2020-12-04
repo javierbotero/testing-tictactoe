@@ -38,7 +38,14 @@ function createPlayer() {
   } else {
     // eslint-disable-next-line prefer-destructuring
     game.gameMatch.shift = game.gameMatch.players[0];
-    game.gameMatch.startGame();
+    game.gameMatch.startGame(
+      game.gameMatch.switchPlayingVar,
+      game.gameBoard.resetBoardArr,
+      game.gameBoard.displayBoard,
+      game.gameMatch.displayScore,
+      game.gameMatch.playGame,
+      game.gameMatch.makeAvailableMarks,
+    );
   }
 }
 

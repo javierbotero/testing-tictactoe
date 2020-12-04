@@ -27,3 +27,15 @@ it('displayScore calls a callback that brings a div and change the content of th
 
   expect(mockDivCB.mock.calls.length).toBe(3);
 });
+
+it('make sure startGame change the switcher var to true with its first callback argument', () => {
+  let switcher = false;
+  const mockSwitcher = jest.fn(() => { switcher = !switcher; });
+  const mockReset = jest.fn();
+  const mockDisplay = jest.fn();
+  const mockScore = jest.fn();
+  const mockStart = jest.fn();
+  const mockMarks = jest.fn();
+  gameMatch.startGame(mockSwitcher, mockReset, mockDisplay, mockScore, mockStart, mockMarks);
+  expect(switcher).toBe(true);
+});

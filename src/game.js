@@ -10,7 +10,7 @@ const spots = () => document.getElementsByClassName('spot');
 const gameMatch = (() => {
   const players = [];
   const shift = '';
-  const playing = false;
+  let playing = false;
 
   const makeAvailableMarks = (cb) => {
     const spots = cb();
@@ -35,15 +35,17 @@ const gameMatch = (() => {
     }
   };
 
-  const startGame = () => {
-    gameMatch.playing = true;
+  const switchPlayingVar = () => { gameMatch.playing = !gameMatch.playing; };
+
+  const startGame = (playingCB, resetBoardArg, displayBoardCB, scoreCB, startCB, letmarksCB) => {
+    playingCB();
     // eslint-disable-next-line no-use-before-define
-    gameBoard.board = ['', '', '', '', '', '', '', '', ''];
+    resetBoardArg();
     // eslint-disable-next-line no-use-before-define
-    gameBoard.displayBoard();
-    displayScore(div, players);
-    playGame(players[0]);
-    makeAvailableMarks(spots);
+    displayBoardCB();
+    scoreCB(div, players);
+    startCB(players[0]);
+    letmarksCB(spots);
   };
 
   return {
@@ -54,11 +56,13 @@ const gameMatch = (() => {
     displayScore,
     startGame,
     makeAvailableMarks,
+    switchPlayingVar,
   };
 })();
 
 const gameBoard = (() => {
   let board = ['', '', '', '', '', '', '', '', ''];
+  const resetBoardArr = () => { board = ['', '', '', '', '', '', '', '', ''] };
   const tile = ['X', 'O'];
   const message = () => document.getElementById('message');
 
@@ -153,6 +157,7 @@ const gameBoard = (() => {
 
   const mark = (tag) => {
     if (!gameMatch.playing) {
+      console.log('playing is false', gameMatch.playing);
       return;
     }
 
@@ -172,6 +177,8 @@ const gameBoard = (() => {
     tile,
     message,
     resetBoard,
+    board,
+    resetBoardArr,
   };
 })();
 
