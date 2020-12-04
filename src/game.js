@@ -25,10 +25,10 @@ const gameMatch = (() => {
     gameBoard.message().innerHTML = `${gameMatch.shift.namePlayer} make a move`;
   };
 
-  const displayScore = () => {
-    div().innerHTML = '<p class="col-12 text-center bg-info text-white m-0">SCORE<p>';
+  const displayScore = (cb, players) => {
+    cb().innerHTML = '<p class="col-12 text-center bg-info text-white m-0">SCORE<p>';
     for (let i = 0; i < players.length; i += 1) {
-      div().innerHTML += `<div class="col-6 p-2 bg-info text-white text-center">
+      cb().innerHTML += `<div class="col-6 p-2 bg-info text-white text-center">
                          <p>${players[i].namePlayer}</p>
                          <p>${players[i].score}</p>
                        </div>`;
@@ -41,7 +41,7 @@ const gameMatch = (() => {
     gameBoard.board = ['', '', '', '', '', '', '', '', ''];
     // eslint-disable-next-line no-use-before-define
     gameBoard.displayBoard();
-    displayScore();
+    displayScore(div, players);
     playGame(players[0]);
     makeAvailableMarks(spots);
   };
@@ -138,7 +138,7 @@ const gameBoard = (() => {
       message().innerHTML = `${player.namePlayer} won!!`;
       player.score += 1;
       gameMatch.playing = false;
-      gameMatch.displayScore();
+      gameMatch.displayScore(div, gameMatch.players);
       changeDivsColors();
       displayReset();
     } else if (!board.includes('')) {
