@@ -5,14 +5,15 @@ const div = () => document.getElementById('score');
 const reset = () => document.getElementById('reset');
 const container = () => document.getElementById('container');
 const { body } = document;
+const spots = () => document.getElementsByClassName('spot');
 
 const gameMatch = (() => {
   const players = [];
   const shift = '';
   const playing = false;
 
-  const makeAvailableMarks = () => {
-    const spots = document.getElementsByClassName('spot');
+  const makeAvailableMarks = (cb) => {
+    const spots = cb();
     for (let i = 0; i < spots.length; i += 1) {
       // eslint-disable-next-line no-use-before-define
       spots[i].addEventListener('click', () => { gameBoard.mark(spots[i]); });
@@ -42,7 +43,7 @@ const gameMatch = (() => {
     gameBoard.displayBoard();
     displayScore();
     playGame(players[0]);
-    makeAvailableMarks();
+    makeAvailableMarks(spots);
   };
 
   return {
@@ -101,7 +102,7 @@ const gameBoard = (() => {
     // eslint-disable-next-line no-use-before-define
     const button = document.getElementById('button-reset');
     reset().removeChild(button);
-    gameMatch.makeAvailableMarks();
+    gameMatch.makeAvailableMarks(spots);
     gameMatch.playing = true;
     gameMatch.playGame();
   };
