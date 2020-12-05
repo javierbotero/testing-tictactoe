@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 const message = () => document.getElementById('message');
 const optionsMark = () => document.getElementsByClassName('mark-options');
 const getName = () => document.getElementById('player-name').value;
@@ -42,7 +43,7 @@ const gameMatch = (() => {
     // eslint-disable-next-line no-use-before-define
     resetBoardArg();
     // eslint-disable-next-line no-use-before-define
-    displayBoardCB();
+    displayBoardCB(container, gameBoard.board);
     scoreCB(div, players);
     startCB(players[0]);
     letmarksCB(spots);
@@ -102,7 +103,7 @@ const gameBoard = (() => {
     // eslint-disable-next-line no-use-before-define
     board = ['', '', '', '', '', '', '', '', ''];
     // eslint-disable-next-line no-use-before-define
-    displayBoard();
+    displayBoard(container, board);
     // eslint-disable-next-line no-use-before-define
     const button = document.getElementById('button-reset');
     myReset().removeChild(button);
@@ -111,43 +112,43 @@ const gameBoard = (() => {
     gameMatch.playGame();
   };
 
-  const displayReset = () => {
+  const displayReset = (myReset) => {
     const button = document.createElement('button');
     button.setAttribute('type', 'button');
     button.setAttribute('id', 'button-reset');
     button.className = 'bg-info text-white p-4 border-0 rounded my-2';
     button.addEventListener('click', () => { resetBoard(reset); });
     button.innerHTML = 'Reset';
-    reset().appendChild(button);
+    myReset().appendChild(button);
   };
 
-  const displayBoard = () => {
-    container().innerHTML = '';
+  const displayBoard = (containerCB, myBoard) => {
+    containerCB().innerHTML = '';
     for (let i = 0; i < 9; i += 1) {
-      container().innerHTML += `<div data-number="${i}" id="${i}" class="spot border border-warning d-flex justify-content-center align-items-center text-white font-weight-bold">${board[i]}</div>`;
+      container().innerHTML += `<div data-number="${i}" id="${i}" class="spot border border-warning d-flex justify-content-center align-items-center text-white font-weight-bold">${myBoard[i]}</div>`;
     }
   };
 
-  const check = (player) => {
+  const check = (player, myMessage, myBoard) => {
     if (
-      (board[0] === board[1] && board[1] === board[2] && board[0] !== '')
-      || (board[3] === board[4] && board[4] === board[5] && board[3] !== '')
-      || (board[6] === board[7] && board[7] === board[8] && board[6] !== '')
-      || (board[0] === board[3] && board[3] === board[6] && board[0] !== '')
-      || (board[1] === board[4] && board[4] === board[7] && board[1] !== '')
-      || (board[2] === board[5] && board[5] === board[8] && board[2] !== '')
-      || (board[0] === board[4] && board[4] === board[8] && board[0] !== '')
-      || (board[2] === board[4] && board[4] === board[6] && board[2] !== '')
+      (myBoard[0] === myBoard[1] && myBoard[1] === myBoard[2] && myBoard[0] !== '')
+      || (myBoard[3] === myBoard[4] && myBoard[4] === myBoard[5] && myBoard[3] !== '')
+      || (myBoard[6] === myBoard[7] && myBoard[7] === myBoard[8] && myBoard[6] !== '')
+      || (myBoard[0] === myBoard[3] && myBoard[3] === myBoard[6] && myBoard[0] !== '')
+      || (myBoard[1] === myBoard[4] && myBoard[4] === myBoard[7] && myBoard[1] !== '')
+      || (myBoard[2] === myBoard[5] && myBoard[5] === myBoard[8] && myBoard[2] !== '')
+      || (myBoard[0] === myBoard[4] && myBoard[4] === myBoard[8] && myBoard[0] !== '')
+      || (myBoard[2] === myBoard[4] && myBoard[4] === myBoard[6] && myBoard[2] !== '')
     ) {
-      message().innerHTML = `${player.namePlayer} won!!`;
+      myMessage().innerHTML = `${player.namePlayer} won!!`;
       player.score += 1;
       gameMatch.playing = false;
       gameMatch.displayScore(div, gameMatch.players);
       changeDivsColors(board);
-      displayReset();
+      displayReset(reset);
     } else if (!board.includes('')) {
-      message().innerHTML = 'We need another round to find a winner!!';
-      displayReset();
+      myMessage().innerHTML = 'We need another round to find a winner!!';
+      displayReset(reset);
     } else {
       // eslint-disable-next-line max-len
       gameMatch.shift = gameMatch.shift === gameMatch.players[0] ? gameMatch.players[1] : gameMatch.players[0];
@@ -157,7 +158,6 @@ const gameBoard = (() => {
 
   const mark = (tag) => {
     if (!gameMatch.playing) {
-      console.log('playing is false', gameMatch.playing);
       return;
     }
 
@@ -166,7 +166,7 @@ const gameBoard = (() => {
     } else {
       board[tag.dataset.number] = gameMatch.shift.markPlayer;
       tag.innerHTML = board[tag.dataset.number];
-      check(gameMatch.shift);
+      check(gameMatch.shift, message, board);
     }
   };
 
@@ -174,6 +174,7 @@ const gameBoard = (() => {
     mark,
     check,
     displayBoard,
+    displayReset,
     tile,
     message,
     resetBoard,
@@ -206,4 +207,5 @@ export {
   optionsMark,
   getName,
   body,
+  container,
 };

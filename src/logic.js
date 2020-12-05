@@ -5,7 +5,7 @@ const welcome = () => {
   console.log(game.message());
   game.message().innerHTML = `Welcome to tic-tac-toe game<br>
                        <button id="start" type="button" class="bg-info text-white p-4 border-0 rounded">Start</button>`;
-  game.gameBoard.displayBoard();
+  game.gameBoard.displayBoard(game.container, game.gameBoard.board);
 };
 
 const selectPlayer = () => {

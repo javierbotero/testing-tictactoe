@@ -1,3 +1,5 @@
 module.exports = {
-  "\\.[jt]sx?$": "babel-jest",
+  transform: {
+    "\\.[jt]sx?$": "babel-jest",
+  },
 };

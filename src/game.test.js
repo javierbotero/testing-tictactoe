@@ -32,6 +32,7 @@ describe('Tests for the gameMatch submodule', () => {
 
 describe('Tests for gameBoard submodule', () => {
   const mockBoard = ['X', 'X', 'X', '', '', '', '', '', ''];
+  const mockReset = jest.fn(() => document.getElementById('reset'));
 
   it('Checks changeDivsColors change the class of the divs that have ids "0", "1", "2" when in the array any combination that makes a line like 0, 1, and 2 have the same string', () => {
     document.body.innerHTML = `
@@ -48,9 +49,36 @@ describe('Tests for gameBoard submodule', () => {
       <div id="message"></div>
       <div id="reset">Text<button type="button" id="button-reset">Reset</button></div>
     `;
-    console.log(document.getElementById('reset').innerHTML);
-    const mockReset = jest.fn(() => document.getElementById('reset'));
     gameBoard.resetBoard(mockReset);
     expect(document.getElementById('reset').innerHTML).toBe('Text');
+  });
+  it('Checks displayReset populates the div#reset with a button', () => {
+    document.body.innerHTML = `
+      <div id="reset"></div>
+    `;
+    gameBoard.displayReset(mockReset);
+    expect(mockReset().innerHTML).toBe('<button type="button" id="button-reset" class="bg-info text-white p-4 border-0 rounded my-2">Reset</button>');
+  });
+  it('make sure displayBoard funtion populates container.innerHTML with 9 divs', () => {
+    document.body.innerHTML = `
+      <div id="container"></div>
+    `;
+    const mockContainer = jest.fn(() => document.getElementById('container'));
+    const mockArr = jest.fn(() => mockBoard);
+    gameBoard.displayBoard(mockContainer, mockArr);
+    expect(mockContainer().childNodes.length).toBe(9);
+  });
+  it('make sure check function populates the div#message with the string "Andres won!!"', () => {
+    document.body.innerHTML = `
+    <div id="container"></div>
+    <div id="message"></div>
+    <div id="reset">Text<button type="button" id="button-reset">Reset</button></div>
+    <div id="score"></div>
+  `;
+    gameBoard.check({ namePlayer: 'Andres' }, () => document.getElementById('message'), mockBoard);
+    expect(document.getElementById('message').innerHTML).toBe('Andres won!!');
+  });
+  it('', () => {
+    
   });
 });
