@@ -66,30 +66,30 @@ const gameBoard = (() => {
   const tile = ['X', 'O'];
   const message = () => document.getElementById('message');
 
-  const changeDivsColors = () => {
+  const changeDivsColors = (myBoard) => {
     let indexes = [];
-    if (board[0] === board[1] && board[1] === board[2] && board[0] !== '') {
+    if (myBoard[0] === myBoard[1] && myBoard[1] === myBoard[2] && myBoard[0] !== '') {
       indexes = [0, 1, 2];
     }
-    if (board[3] === board[4] && board[4] === board[5] && board[3] !== '') {
+    if (myBoard[3] === myBoard[4] && myBoard[4] === myBoard[5] && myBoard[3] !== '') {
       indexes = [3, 4, 5];
     }
-    if (board[6] === board[7] && board[7] === board[8] && board[6] !== '') {
+    if (myBoard[6] === myBoard[7] && myBoard[7] === myBoard[8] && myBoard[6] !== '') {
       indexes = [6, 7, 8];
     }
-    if (board[0] === board[3] && board[3] === board[6] && board[0] !== '') {
+    if (myBoard[0] === myBoard[3] && myBoard[3] === myBoard[6] && myBoard[0] !== '') {
       indexes = [0, 3, 6];
     }
-    if (board[1] === board[4] && board[4] === board[7] && board[1] !== '') {
+    if (myBoard[1] === myBoard[4] && myBoard[4] === myBoard[7] && myBoard[1] !== '') {
       indexes = [1, 4, 7];
     }
-    if (board[2] === board[5] && board[5] === board[8] && board[2] !== '') {
+    if (myBoard[2] === myBoard[5] && myBoard[5] === myBoard[8] && myBoard[2] !== '') {
       indexes = [2, 5, 8];
     }
-    if (board[0] === board[4] && board[4] === board[8] && board[0] !== '') {
+    if (myBoard[0] === myBoard[4] && myBoard[4] === myBoard[8] && myBoard[0] !== '') {
       indexes = [0, 4, 8];
     }
-    if (board[2] === board[4] && board[4] === board[6] && board[2] !== '') {
+    if (myBoard[2] === myBoard[4] && myBoard[4] === myBoard[6] && myBoard[2] !== '') {
       indexes = [2, 4, 6];
     }
 
@@ -98,14 +98,14 @@ const gameBoard = (() => {
     }
   };
 
-  const resetBoard = () => {
+  const resetBoard = (myReset) => {
     // eslint-disable-next-line no-use-before-define
     board = ['', '', '', '', '', '', '', '', ''];
     // eslint-disable-next-line no-use-before-define
     displayBoard();
     // eslint-disable-next-line no-use-before-define
     const button = document.getElementById('button-reset');
-    reset().removeChild(button);
+    myReset().removeChild(button);
     gameMatch.makeAvailableMarks(spots);
     gameMatch.playing = true;
     gameMatch.playGame();
@@ -116,7 +116,7 @@ const gameBoard = (() => {
     button.setAttribute('type', 'button');
     button.setAttribute('id', 'button-reset');
     button.className = 'bg-info text-white p-4 border-0 rounded my-2';
-    button.addEventListener('click', () => { resetBoard(); });
+    button.addEventListener('click', () => { resetBoard(reset); });
     button.innerHTML = 'Reset';
     reset().appendChild(button);
   };
@@ -143,7 +143,7 @@ const gameBoard = (() => {
       player.score += 1;
       gameMatch.playing = false;
       gameMatch.displayScore(div, gameMatch.players);
-      changeDivsColors();
+      changeDivsColors(board);
       displayReset();
     } else if (!board.includes('')) {
       message().innerHTML = 'We need another round to find a winner!!';
@@ -179,6 +179,7 @@ const gameBoard = (() => {
     resetBoard,
     board,
     resetBoardArr,
+    changeDivsColors,
   };
 })();
 
