@@ -17,7 +17,7 @@ const gameMatch = (() => {
     const spots = cb();
     for (let i = 0; i < spots.length; i += 1) {
       // eslint-disable-next-line no-use-before-define
-      spots[i].addEventListener('click', () => { gameBoard.mark(spots[i]); });
+      spots[i].addEventListener('click', () => { gameBoard.mark(spots[i], message, gameMatch.shift, gameBoard.check, gameMatch.playing); });
     }
   };
 
@@ -65,7 +65,6 @@ const gameBoard = (() => {
   let board = ['', '', '', '', '', '', '', '', ''];
   const resetBoardArr = () => { board = ['', '', '', '', '', '', '', '', ''] };
   const tile = ['X', 'O'];
-  const message = () => document.getElementById('message');
 
   const changeDivsColors = (myBoard) => {
     let indexes = [];
@@ -156,17 +155,17 @@ const gameBoard = (() => {
     }
   };
 
-  const mark = (tag) => {
-    if (!gameMatch.playing) {
+  const mark = (tag, myMessage, shiftPlayer, checkCB, playingBol) => {
+    if (!playingBol) {
       return;
     }
 
     if (tag.innerHTML !== '') {
-      message().innerHTML = 'Choose another space';
+      myMessage().innerHTML = 'Choose another space';
     } else {
-      board[tag.dataset.number] = gameMatch.shift.markPlayer;
+      board[tag.dataset.number] = shiftPlayer.markPlayer;
       tag.innerHTML = board[tag.dataset.number];
-      check(gameMatch.shift, message, board);
+      checkCB(shiftPlayer, myMessage, board);
     }
   };
 
