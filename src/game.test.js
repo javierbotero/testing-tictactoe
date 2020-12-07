@@ -98,7 +98,7 @@ describe('Tests for gameBoard submodule', () => {
   });
 });
 
-describe('player factory function', () => {
+describe('Test for player factory function', () => {
   it('make sure player instance has namePlayer as "Andres"', () => {
     const andres = player('Andres', 'X');
     expect(andres.namePlayer).toBe('Andres');
