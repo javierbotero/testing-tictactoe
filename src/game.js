@@ -63,7 +63,7 @@ const gameMatch = (() => {
 
 const gameBoard = (() => {
   let board = ['', '', '', '', '', '', '', '', ''];
-  const resetBoardArr = () => { board = ['', '', '', '', '', '', '', '', ''] };
+  const resetBoardArr = () => { board = ['', '', '', '', '', '', '', '', '']; };
   const tile = ['X', 'O'];
 
   const changeDivsColors = (myBoard) => {
