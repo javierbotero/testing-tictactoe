@@ -59,7 +59,8 @@ const firstLayout = () => {
   <div id="score" class="row mx-auto w-25 mt-3"></div>
   `;
   game.body.innerHTML = html;
-  console.log(game.body);
 };
 
-export { welcome, selectPlayer, createPlayer, firstLayout };
+export {
+  welcome, selectPlayer, createPlayer, firstLayout,
+};
