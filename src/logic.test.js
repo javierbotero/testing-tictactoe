@@ -2,11 +2,10 @@ import * as logic from './logic';
 import * as game from './game';
 
 describe('Tests for logic', () => {
-
   it('calls welcome()', () => {
     document.body.innerHTML = `
       <div id="container"></div>
-      <div id="message">Welcome<div>
+      <div id="message"><div>
     `;
     game.message = jest.fn(() => document.getElementById('message'));
     game.container = jest.fn(() => document.getElementById('container'));
@@ -25,6 +24,18 @@ describe('Tests for logic', () => {
   });
 
   it('creates players', () => {
-    
+    document.body.innerHTML = `
+      <div id="container"></div>
+      <div id="player-name">Andres</div>
+      <div id="message"></div>
+      <div id="reset">Text<button type="button" id="button-reset">Reset</button></div>
+      <div id="score"></div>
+      <div id="current" data-number="1"></div>
+    `;
+    const mock = {
+      target: { innerHTML: 'X' },
+    };
+    logic.createPlayer(mock);
+    expect(game.gameMatch.players.length).toBe(1);
   });
 });

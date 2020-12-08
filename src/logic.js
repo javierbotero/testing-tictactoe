@@ -21,13 +21,15 @@ const selectPlayer = (cb) => {
   const optionsMark1 = game.optionsMark();
   for (let i = 0; i < optionsMark1.length; i += 1) {
     // eslint-disable-next-line no-use-before-define
-    optionsMark1[i].addEventListener('click', createPlayer);
+    optionsMark1[i].addEventListener('click', (e) => {
+      createPlayer(e); //eslint-disable-line
+    });
   }
 };
 
-function createPlayer() {
+function createPlayer(e) {
   const playerName = game.getName();
-  const player = game.player(playerName, this.innerHTML);
+  const player = game.player(playerName, e.target.innerHTML);
   game.gameMatch.players.push(player);
   game.gameBoard.tile.splice(
     game.gameBoard.tile.findIndex((mark) => mark === player.markPlayer),
