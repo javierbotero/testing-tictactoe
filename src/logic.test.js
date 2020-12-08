@@ -23,7 +23,7 @@ describe('Tests for logic', () => {
     expect(mockMsg).toHaveBeenCalled();
   });
 
-  it('creates players', () => {
+  it('pushes a player into players array', () => {
     document.body.innerHTML = `
       <div id="container"></div>
       <div id="player-name">Andres</div>
@@ -37,5 +37,10 @@ describe('Tests for logic', () => {
     };
     logic.createPlayer(mock);
     expect(game.gameMatch.players.length).toBe(1);
+  });
+
+  it('populates layout with 4 divs', () => {
+    logic.firstLayout();
+    expect(game.body.children.length).toBe(4);
   });
 });
