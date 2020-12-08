@@ -14,5 +14,17 @@ describe('Tests for logic', () => {
     expect(game.message().innerHTML).toBeDefined();
   });
 
-  it('');
+  it('selects Player', () => {
+    document.body.innerHTML = `
+      <div id="message"></div>
+    `;
+    const msg = document.getElementById('message');
+    const mockMsg = jest.fn(() => msg);
+    logic.selectPlayer(mockMsg);
+    expect(mockMsg).toHaveBeenCalled();
+  });
+
+  it('creates players', () => {
+    
+  });
 });

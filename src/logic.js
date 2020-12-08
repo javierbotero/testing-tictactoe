@@ -8,8 +8,8 @@ const welcome = () => {
   game.gameBoard.displayBoard(game.container, game.gameBoard.board);
 };
 
-const selectPlayer = () => {
-  game.message().innerHTML = `Player ${
+const selectPlayer = (cb) => {
+  cb().innerHTML = `Player ${
     3 - game.gameBoard.tile.length
   } write a name and select a mark<br>
                        <input type="text" placeholder="Name" id="player-name" class="rounded border-0 my-2">`;
@@ -17,7 +17,7 @@ const selectPlayer = () => {
   for (let i = 0; i < game.gameBoard.tile.length; i += 1) {
     options.innerHTML += `<li id="${game.gameBoard.tile[i]}" class="mark-options list-inline-item p-3 rounded-circle text-white">${game.gameBoard.tile[i]}</li>`;
   }
-  game.message().appendChild(options);
+  cb().appendChild(options);
   const optionsMark1 = game.optionsMark();
   for (let i = 0; i < optionsMark1.length; i += 1) {
     // eslint-disable-next-line no-use-before-define
@@ -34,7 +34,7 @@ function createPlayer() {
     1,
   );
   if (game.gameBoard.tile.length > 0) {
-    selectPlayer();
+    selectPlayer(game.message);
   } else {
     // eslint-disable-next-line prefer-destructuring
     game.gameMatch.shift = game.gameMatch.players[0];
