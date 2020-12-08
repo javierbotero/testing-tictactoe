@@ -4,6 +4,10 @@
 
 This project is a game built with javascript. The "Tic Tac Toe" game involves two players who play at intervals by placing a tile on a board that has 9 spaces. There is a winner when the player has his tile on 3 spaces in either the diagonal, horizontal or vertical positions. There is a draw where there is no winner. The game uses webpack to bundle modules used in this project. The game was tested with Jest to make sure there are no hidden bugs.
 
+## live Preview
+
+[Live Preview](https://javierbotero.github.io/testing-tictactoe/)
+![Shcreenshot Tic-tac-toe](./src/assets/tic-tac-toe.png)
 
 ## Built With
 
