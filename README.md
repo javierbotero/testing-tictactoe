@@ -7,6 +7,7 @@ This project is a game built with javascript. The "Tic Tac Toe" game involves tw
 ## live Preview
 
 [Live Preview](https://javierbotero.github.io/testing-tictactoe/)
+
 ![Shcreenshot Tic-tac-toe](./src/assets/tic-tac-toe.png)
 
 ## Built With
